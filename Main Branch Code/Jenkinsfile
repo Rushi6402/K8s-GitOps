@@ -18,6 +18,11 @@ pipeline {
                 checkout scm
             }
         }
+        stage('whoiam') {
+            steps {
+                sh 'whoami'
+            }
+        }
 
         stage('Build and Push Image') {
             when { branch 'master' }
