@@ -1,3 +1,0 @@
-metadata:
-  name: movie-app-service
-  namespace: default   # ← add this
