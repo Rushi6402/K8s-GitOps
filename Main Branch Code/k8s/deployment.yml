@@ -20,6 +20,6 @@ spec:
     spec:
       containers:
       - name: movie-app
-        image: infrawave/my-app:build-25
+        image: infrawave/my-app:build-26
         ports:
         - containerPort: 5000
