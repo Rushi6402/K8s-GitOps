@@ -6,9 +6,15 @@ pipeline {
     }
 
     environment {
+<<<<<<< HEAD
         IMAGE_NAME = "kastrov/multibranch-flask-app"
         GIT_USER   = "kastrokiran"
         GIT_EMAIL  = "learnwithkastro@gmail.com"
+=======
+        IMAGE_NAME = "infrawave/my-app"
+        GIT_USER   = "Rushi6402"
+        GIT_EMAIL  = "rushipatil8582@gmail.com"
+>>>>>>> origin/master
     }
 
     stages {
@@ -18,9 +24,20 @@ pipeline {
                 checkout scm
             }
         }
+<<<<<<< HEAD
 
         stage('Build and Push Image') {
             when { branch 'main' }
+=======
+        stage('whoiam') {
+            steps {
+                sh 'whoami'
+            }
+        }
+
+        stage('Build and Push Image') {
+            when { branch 'master' }
+>>>>>>> origin/master
             steps {
                 script {
                     env.IMAGE_TAG = "build-${BUILD_NUMBER}"
@@ -31,6 +48,7 @@ pipeline {
                         passwordVariable: 'DOCKER_PASS'
                     )]) {
                         sh """
+<<<<<<< HEAD
                         docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
                         echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
                         docker push ${IMAGE_NAME}:${IMAGE_TAG}
@@ -64,6 +82,14 @@ pipeline {
                         git diff --cached --quiet || git commit -m "Updated image to ${IMAGE_TAG}"
                         git push https://${GIT_USERNAME}:${GIT_TOKEN}@github.com/KastroVKiran/Multi-Branch-Prod.git main
                         """
+=======
+                        docker build -t ${IMAGE_NAME}:${IMAGE_TAG} -f "Main Branch Code/Dockerfile" "Main Branch Code/"
+                           """
+                        sh ''' echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin '''
+
+                         sh """   docker push ${IMAGE_NAME}:${IMAGE_TAG}
+                             """
+>>>>>>> origin/master
                     }
                 }
             }
