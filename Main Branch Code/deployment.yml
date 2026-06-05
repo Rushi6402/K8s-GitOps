@@ -1,0 +1,21 @@
+# ✅ Your code is correct
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: movie-app
+  namespace: default
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: movie-app
+  template:
+    metadata:
+      labels:
+        app: movie-app
+    spec:
+      containers:
+      - name: movie-app
+        image: infrawave/my-app:build-2
+        ports:
+        - containerPort: 5000
