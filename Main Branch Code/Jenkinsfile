@@ -8,7 +8,7 @@ pipeline {
     environment {
         IMAGE_NAME = "infrawave/my-app"
         GIT_USER   = "Rushi6402"
-        GIT_EMAIL  = "rushipatil8582@gmail.com"
+        GIT_EMAIL  = "rushipatil6402@gmail.com"
     }
 
     stages {
@@ -18,6 +18,24 @@ pipeline {
                 checkout scm
             }
         }
+       stage('SonarCloud Analysis') {
+           steps {
+              withCredentials([usernamePassword(
+                  credentialsId: 'sonar-token',
+                  usernameVariable: 'SONAR_USER',
+                  passwordVariable: 'SONAR_TOKEN'
+              )]) {
+              	  sh '''
+                      cd "Main Branch Code"
+                      pip install pysonar --break-system-packages
+                      pysonar \
+                        --sonar-token=$SONAR_TOKEN \
+                        --sonar-project-key=K8s-GitOps \
+                        --sonar-organization=rushi6402
+                  '''
+               }
+           }
+       }
 
        stage('Build and Push Image') {
             when { branch 'master' }
