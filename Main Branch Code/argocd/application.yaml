@@ -7,9 +7,9 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/KastroVKiran/k8s-multi-app.git
-    targetRevision: main
-    path: k8s
+    repoURL: https://github.com/Rushi6402/K8s-GitOps.git
+    targetRevision: master
+    path: "Main Branch Code/k8s"
 
   destination:
     server: https://kubernetes.default.svc
