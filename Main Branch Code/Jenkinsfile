@@ -20,21 +20,21 @@ pipeline {
         }
        stage('SonarCloud Analysis') {
            steps {
-              withCredentials([usernamePassword(
-                  credentialsId: 'sonar-token',
-                  usernameVariable: 'SONAR_USER',
-                  passwordVariable: 'SONAR_TOKEN'
-              )]) {
-              	  sh '''
-                      cd "Main Branch Code"
-                      pip install pysonar --break-system-packages
-                      pysonar \
-                        --sonar-token=$SONAR_TOKEN \
-                        --sonar-project-key=K8s-GitOps \
-                        --sonar-organization=rushi6402
-                  '''
-               }
-           }
+               withCredentials([usernamePassword(
+                   credentialsId: 'sonar-token',
+                   usernameVariable: 'SONAR_USER',
+                   passwordVariable: 'SONAR_TOKEN'
+               )]) {
+                   sh '''
+                       cd "Main Branch Code"
+                       pip3 install pysonar --break-system-packages
+                       pysonar \
+                         --sonar-token=$SONAR_TOKEN \
+                         --sonar-project-key=K8s-GitOps \
+                         --sonar-organization=rushi6402
+                   '''
+                }
+            }
        }
 
        stage('Build and Push Image') {
