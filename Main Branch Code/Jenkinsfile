@@ -18,20 +18,21 @@ pipeline {
                 checkout scm
             }
         }
-       stage('SonarCloud Analysis') {
-           steps {
-               withCredentials([usernamePassword(
-                   credentialsId: 'sonar-token',
-                   usernameVariable: 'SONAR_USER',
-                   passwordVariable: 'SONAR_TOKEN'
-               )]) {
+        stage('SonarCloud Analysis') {
+            steps {
+                withCredentials([string(
+                    credentialsId: 'sonar-token',
+                    variable: 'SONAR_TOKEN'
+                )]) {
                    sh '''
-                       cd "Main Branch Code"
-                       pip3 install pysonar --break-system-packages
-                       pysonar \
-                         --sonar-token=$SONAR_TOKEN \
-                         --sonar-project-key=K8s-GitOps \
-                         --sonar-organization=rushi6402
+                       docker run --rm \
+                         -e SONAR_TOKEN=$SONAR_TOKEN \
+                         -v $(pwd):/usr/src \
+                         sonarsource/sonar-scanner-cli \
+                         -Dsonar.projectKey=K8s-GitOps \
+                         -Dsonar.organization=rushi6402 \
+                         -Dsonar.sources=. \
+                         -Dsonar.host.url=https://sonarcloud.io
                    '''
                 }
             }
