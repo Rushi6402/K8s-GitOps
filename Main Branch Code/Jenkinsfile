@@ -61,7 +61,7 @@ pipeline {
             }
         }
         stage('Trivy Security Scan') {
-            staps {
+            steps {
                 sh """
                     trivy image \
                       --exit-code 1 \
