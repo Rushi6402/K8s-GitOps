@@ -61,13 +61,15 @@ pipeline {
             }
         }
         stage('Trivy Security Scan') {
-            sh """
-                trivy image \
-                  --exit-code 1 \
-                  --severity CRITICAL \
-                  --no-progress \
-                  ${IMAGE_NAME}:${IMAGE_TAG}
-            """
+            staps {
+                sh """
+                    trivy image \
+                      --exit-code 1 \
+                      --severity CRITICAL \
+                      --no-progress \
+                      ${IMAGE_NAME}:${IMAGE_TAG}
+               """
+            }
         }
         stage('Update K8s Manifest') {
             when { branch 'master' }
