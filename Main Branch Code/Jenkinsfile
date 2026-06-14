@@ -18,27 +18,27 @@ pipeline {
                 checkout scm
             }
         }
-        stage('SonarCloud Analysis') {
-            steps {
-                withCredentials([string(
-                    credentialsId: 'sonar-token',
-                    variable: 'SONAR_TOKEN'
-                )]) {
-                   sh '''
-                       docker run --rm \
-                         -e SONAR_TOKEN=$SONAR_TOKEN \
-                         -e SONAR_USER_HOME=/tmp/.sonar \
-                         -v $(pwd):/usr/src \
-                         -v /tmp/.sonar:/tmp/.sonar \
-                         sonarsource/sonar-scanner-cli \
-                         -Dsonar.projectKey=K8s-GitOps \
-                         -Dsonar.organization=rushi6402 \
-                         -Dsonar.sources=. \
-                         -Dsonar.host.url=https://sonarcloud.io
-                   '''
-                }
-            }
-       }
+     //  ## stage('SonarCloud Analysis') {
+          //  steps {
+             //   withCredentials([string(
+                  //  credentialsId: 'sonar-token',
+                 //   variable: 'SONAR_TOKEN'
+               // )]) {
+                  // sh '''
+                     //  docker run --rm \
+                      //   -e SONAR_TOKEN=$SONAR_TOKEN \
+                       //  -e SONAR_USER_HOME=/tmp/.sonar \
+                     //    -v $(pwd):/usr/src \
+                   //      -v /tmp/.sonar:/tmp/.sonar \
+                       //  sonarsource/sonar-scanner-cli \
+                   //      -Dsonar.projectKey=K8s-GitOps \
+                     //    -Dsonar.organization=rushi6402 \
+               //          -Dsonar.sources=. \
+                 //        -Dsonar.host.url=https://sonarcloud.io
+             //      '''
+           //     }
+         //   }
+       //}
 
        stage('Build and Push Image') {
             when { branch 'master' }
